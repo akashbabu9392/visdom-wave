@@ -37,9 +37,6 @@ export default function Navbar() {
             <Link href="/contact" className="hover:text-[#5588a3] transition-colors">
               Contact
             </Link>
-            <Link href="/courses" className="hover:text-[#5588a3] transition-colors">
-              Courses
-            </Link>
           </div>
 
           {/* Desktop Auth Buttons */}
@@ -101,13 +98,6 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contact
-              </Link>
-              <Link 
-                href="/courses" 
-                className="block px-3 py-2 text-white hover:text-[#5588a3] transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Courses
               </Link>
               <Link 
                 href="/signin" 
