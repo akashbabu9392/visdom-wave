@@ -5,6 +5,8 @@ import { BookOpen } from 'lucide-react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import Autoplay from 'embla-carousel-autoplay';
+import { Carousel, CarouselContent, CarouselItem } from './ui/carousel';
+import Image from 'next/image';
 
 type Curriculum = {
   id: string;
@@ -19,13 +21,13 @@ type Language = {
 };
 
 const CURRICULUM_OPTIONS: Curriculum[] = [
-  { id: 'state', name: 'State Board', logo: '🏫' },
-  { id: 'cbse', name: 'CBSE', logo: '📚' },
-  { id: 'cisc', name: 'CISCE', logo: '🏢' },
-  { id: 'ib', name: 'IB', logo: '🌍' },
-  { id: 'neet', name: 'NEET', logo: '⚕️' },
-  { id: 'jee', name: 'JEE', logo: '🔬' },
-  { id: 'nios', name: 'NIOS', logo: '📖' },
+  { id: 'state-board', name: 'State Board', logo: '/images/state-board.jpg' },
+  { id: 'cbse', name: 'CBSE', logo: '/images/cbse.jpg' },
+  { id: 'cisc', name: 'CISCE', logo: '/images/cisce.jpg' },
+  { id: 'ib', name: 'IB', logo: '/images/ib.jpg' },
+  { id: 'neet', name: 'NEET', logo: '/images/neet.jpg' },
+  { id: 'jee', name: 'JEE', logo: '/images/jee.jpg' },
+  { id: 'nios', name: 'NIOS', logo: '/images/nios.jpg' },
 ];
 
 const LANGUAGE_OPTIONS: Language[] = [
@@ -149,32 +151,25 @@ export function CurriculumSection() {
         </div>
 
         {/* Supported Curriculum Carousel - Full Width */}
-        <div className="bg-gray-50 rounded-xl p-8">
+        <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-8 shadow-lg">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
             Supported Curriculum
           </h3>
-          
-          <div 
-            className="relative"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div className="overflow-hidden" ref={emblaRef}>
-              <div className="flex">
+          <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <Carousel opts={{ loop: true, align: 'start', dragFree: true, containScroll: 'trimSnaps' }} plugins={[WheelGesturesPlugin(), Autoplay({ delay: 2000, stopOnInteraction: false })]}>
+              <CarouselContent>
                 {[...CURRICULUM_OPTIONS, ...CURRICULUM_OPTIONS].map((curriculum, index) => (
-                  <div 
-                    key={`${curriculum.id}-${index}`}
-                    className="flex-shrink-0 w-40 mx-2 bg-white rounded-lg p-6 shadow-sm border border-gray-100 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-transform hover:scale-105"
-                    onClick={() => setSelectedCurriculum(curriculum.id)}
-                  >
-                    <span className="text-3xl mb-3">{curriculum.logo}</span>
-                    <span className="text-sm font-medium text-gray-900 text-center">
-                      {curriculum.name}
-                    </span>
-                  </div>
+                  <CarouselItem key={`${curriculum.id}-${index}`} className="basis-1/4 md:basis-1/7 px-2">
+                    <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100 flex flex-col items-center justify-center cursor-pointer hover:shadow-xl hover:scale-105 transition-transform duration-300">
+                      <span className="text-3xl mb-3">
+                        <Image src={curriculum.logo} alt={curriculum.name + ' logo'} width={48} height={48} className="w-12 h-12 object-contain mb-2" />
+                      </span>
+                      <span className="text-sm font-semibold text-gray-900 text-center">{curriculum.name}</span>
+                    </div>
+                  </CarouselItem>
                 ))}
-              </div>
-            </div>
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </div>

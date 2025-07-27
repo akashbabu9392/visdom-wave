@@ -47,7 +47,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose Our Platform - Modern Design */}
+      {/* Why Choose Us - Modern Redesign */}
       <section className="py-20 bg-gradient-to-br from-[#f8fafc] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -61,77 +61,62 @@ export default function Home() {
               Join thousands of successful learners who have transformed their careers with our innovative platform.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-            {[
-              {
-                value: "97%",
-                label: "Student Satisfaction",
-                icon: "🎓"
-              },
-              {
-                value: "50K+",
-                label: "Active Students",
-                icon: "👥"
-              },
-              {
-                value: "24/7",
-                label: "Support Available",
-                icon: "🛟"
-              },
-              {
-                value: "100+",
-                label: "Expert Instructors",
-                icon: "🏆"
-              }
-            ].map((stat, index) => (
-              <div 
-                key={index} 
-                className="group bg-[#22546e] p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center border border-[#e1e9ee]"
-              >
-                <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-6 transition-transform duration-300 group-hover:scale-110">
-                  <span className="text-3xl">{stat.icon}</span>
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-                <h3 className="text-lg font-semibold text-white/90">{stat.label}</h3>
-              </div>
-            ))}
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 title: "Interactive Learning",
                 description: "Engage with interactive content and hands-on projects to enhance your learning experience.",
-                icon: "🎯"
+                icon: "🎯",
+                gradient: "from-blue-500 to-cyan-500"
               },
               {
                 title: "Expert Instructors",
                 description: "Learn from industry experts with years of experience in their respective fields.",
-                icon: "👨‍🏫"
+                icon: "👨‍🏫",
+                gradient: "from-purple-500 to-pink-500"
               },
               {
                 title: "Flexible Schedule",
                 description: "Access courses anytime, anywhere, and learn at your own pace.",
-                icon: "⏱️"
+                icon: "⏱️",
+                gradient: "from-amber-500 to-orange-500"
+              },
+              {
+                title: "Personalized Pathways",
+                description: "AI-driven recommendations help you focus on what matters most for your goals.",
+                icon: "🤖",
+                gradient: "from-emerald-500 to-teal-500"
+              },
+              {
+                title: "Progress Tracking",
+                description: "Visualize your achievements and stay motivated with real-time analytics.",
+                icon: "📈",
+                gradient: "from-pink-500 to-yellow-500"
+              },
+              {
+                title: "24/7 Support",
+                description: "Get help whenever you need it with our round-the-clock support team.",
+                icon: "🛟",
+                gradient: "from-indigo-500 to-blue-500"
               }
-            ].map((feature, index) => (
-              <div 
-                key={index} 
-                className="group bg-[#22546e] p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-[#e1e9ee] overflow-hidden relative text-white"
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/[0.08] transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl hover:shadow-blue-900/20 overflow-hidden relative"
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
               >
-                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl mb-6 transition-transform duration-300 group-hover:rotate-6">
-                  {feature.icon}
+                <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br ${item.gradient} opacity-20 group-hover:opacity-30 transition-opacity duration-500`}></div>
+                <div className={`w-16 h-16 rounded-2xl mb-6 flex items-center justify-center text-3xl bg-gradient-to-br ${item.gradient} shadow-lg`}>
+                  {item.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-white/80 mb-6">{feature.description}</p>
-                <button className="text-sm font-medium text-white/90 hover:text-white flex items-center group-hover:translate-x-1 transition-all duration-300">
+                <h3 className="text-xl font-bold mb-3 text-[#22546e] group-hover:text-blue-900">{item.title}</h3>
+                <p className="text-[#4a6c8d] mb-6 leading-relaxed">{item.description}</p>
+                <button className="inline-flex items-center text-sm font-medium text-blue-700 hover:text-blue-900 group-hover:translate-x-1 transition-all duration-300">
                   Learn more
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
             ))}
           </div>
@@ -222,7 +207,7 @@ export default function Home() {
                 data-aos-delay={index * 100 + 150}
               >
                 <div className="flex items-start">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center text-2xl mr-5 flex-shrink-0 shadow-lg">
+                  <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center text-3xl mr-5 flex-shrink-0 shadow-lg">
                     {item.icon}
                   </div>
                   <div>
@@ -267,73 +252,47 @@ export default function Home() {
 
 
       {/* Why Choose Wisdom Wave? Section */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-[#f8fafc] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Wisdom Wave?</h2>
-            <p className="text-gray-600 text-lg">Experience the future of education with our innovative learning platform designed to help you succeed.</p>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Why Choose Wisdom Wave?</h2>
+            <p className="text-lg text-gray-600">Experience the future of education with our innovative learning platform designed to help you succeed.</p>
           </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Left Side - Features */}
             <div className="lg:col-span-2 space-y-6">
-              {[
-                {
-                  icon: <Cpu className="w-10 h-10 text-blue-600" />,
-                  title: "AI-Powered Learning",
-                  description: "Personalized learning paths powered by advanced AI algorithms that adapt to your unique learning style and pace."
-                },
-                {
-                  icon: <Headset className="w-10 h-10 text-green-600" />,
-                  title: "Smart Tutoring",
-                  description: "24/7 access to AI tutors that provide instant help and guidance whenever you need it."
-                },
-                {
-                  icon: <BarChart className="w-10 h-10 text-purple-600" />,
-                  title: "Adaptive Feedback",
-                  description: "Get real-time feedback and recommendations to improve your understanding and performance."
-                }
-              ].map((feature, index) => (
-                <div key={index} className="flex items-start space-x-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                  <div className="flex-shrink-0">
-                    {feature.icon}
-                  </div>
+              {[{icon: <Cpu className="w-10 h-10 text-blue-600" />,title: "AI-Powered Learning",description: "Personalized learning paths powered by advanced AI algorithms that adapt to your unique learning style and pace."},{icon: <Headset className="w-10 h-10 text-green-600" />,title: "Smart Tutoring",description: "24/7 access to AI tutors that provide instant help and guidance whenever you need it."},{icon: <BarChart className="w-10 h-10 text-purple-600" />,title: "Adaptive Feedback",description: "Get real-time feedback and recommendations to improve your understanding and performance."}].map((feature, index) => (
+                <div key={index} className="flex items-start space-x-4 p-6 bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                  <div className="flex-shrink-0 bg-gradient-to-br from-blue-100 to-blue-50 rounded-xl p-3">{feature.icon}</div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
                     <p className="text-gray-600">{feature.description}</p>
                   </div>
                 </div>
               ))}
             </div>
-
             {/* Right Side - AI Learning Assistant Card */}
-            <div className="lg:col-span-2 space-y-6">
-              <div className="bg-blue-50 rounded-2xl p-6 shadow-sm border border-blue-100">
+            <div className="lg:col-span-2 flex flex-col justify-center">
+              <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 shadow-xl border border-blue-100">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-gray-900">AI Learning Assistant</h3>
+                  <h3 className="text-2xl font-bold text-gray-900">AI Learning Assistant</h3>
                   <div className="flex space-x-2">
-                    <button className="p-1 rounded-full hover:bg-blue-100">
-                      <MoreHorizontal className="w-5 h-5 text-gray-500" />
-                    </button>
+                    <button className="p-1 rounded-full hover:bg-blue-100 transition-colors"><MoreHorizontal className="w-5 h-5 text-gray-500" /></button>
                   </div>
                 </div>
-                
                 {/* AI Recommendation */}
-                <div className="bg-white p-4 rounded-xl mb-6 border border-blue-100">
+                <div className="bg-white p-4 rounded-xl mb-6 border border-blue-100 shadow-sm">
                   <div className="flex items-start space-x-3">
-                    <div className="bg-blue-100 p-2 rounded-full">
-                      <Sparkles className="w-5 h-5 text-blue-600" />
-                    </div>
+                    <div className="bg-blue-100 p-2 rounded-full"><Sparkles className="w-5 h-5 text-blue-600" /></div>
                     <div>
-                      <h4 className="font-medium text-gray-900 mb-1">AI Recommendation</h4>
+                      <h4 className="font-semibold text-gray-900 mb-1">AI Recommendation</h4>
                       <p className="text-sm text-gray-600">Based on your progress, we recommend focusing on Machine Learning concepts next.</p>
                     </div>
                   </div>
                 </div>
-
                 {/* Weekly Progress */}
                 <div className="mb-6">
-                  <h4 className="text-sm font-medium text-gray-700 mb-3">Weekly Progress</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-3">Weekly Progress</h4>
                   <div className="grid grid-cols-7 gap-2 mb-2">
                     {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
                       <div key={i} className="text-center">
@@ -343,10 +302,9 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-
                 {/* Student Success Story */}
-                <div className="bg-white p-4 rounded-xl border border-blue-100">
-                  <h4 className="text-sm font-medium text-gray-700 mb-3">Student Success Story</h4>
+                <div className="bg-white p-4 rounded-xl border border-blue-100 shadow-sm">
+                  <h4 className="text-sm font-semibold text-gray-700 mb-3">Student Success Story</h4>
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-medium">JD</div>
                     <div>
@@ -363,29 +321,26 @@ export default function Home() {
 
       
       {/* Leader's Voice Section */}
-      <section className="py-16 bg-[#111827] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Leader&apos;s Voice</h2>
+      <section className="py-16 bg-gradient-to-br from-[#111827] to-[#1e293b] text-white relative overflow-hidden">
+        <div className="absolute inset-0 animate-gradient bg-gradient-to-br from-blue-900/30 via-purple-900/20 to-pink-900/10 opacity-60 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <h2 className="text-4xl font-extrabold text-center mb-12 tracking-tight">Leader&apos;s Voice</h2>
           
           <div className="flex flex-col lg:flex-row gap-12 items-center">
             {/* Left Side - Testimonial */}
             <div className="lg:w-1/2">
-              <div className="relative">
-                <svg className="w-12 h-12 text-gray-400 mb-6" fill="currentColor" viewBox="0 0 24 24">
+              <div className="relative bg-white/20 backdrop-blur-lg rounded-2xl p-10 shadow-xl border border-white/10">
+                <svg className="w-12 h-12 text-blue-400 mb-6 animate-float" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
-                <blockquote className="text-xl md:text-2xl font-medium text-gray-300 mb-8">
-                  &ldquo;We are committed to transforming education through innovative technology that makes learning more engaging, accessible, and effective for students across India.&rdquo;
-                </blockquote>
+                <blockquote className="text-2xl md:text-3xl font-medium text-blue-100 mb-8">&ldquo;We are committed to transforming education through innovative technology that makes learning more engaging, accessible, and effective for students across India.&rdquo;</blockquote>
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="h-12 w-12 rounded-full bg-gray-600 flex items-center justify-center text-white font-bold">
-                      RS
-                    </div>
+                    <div className="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">RS</div>
                   </div>
                   <div className="ml-4">
-                    <p className="text-lg font-semibold">Rakesh Sharma</p>
-                    <p className="text-gray-400">CEO & Founder</p>
+                    <p className="text-lg font-semibold text-white">Rakesh Sharma</p>
+                    <p className="text-blue-200">CEO & Founder</p>
                   </div>
                 </div>
               </div>
@@ -393,18 +348,13 @@ export default function Home() {
             
             {/* Right Side - Card */}
             <div className="lg:w-1/2">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="relative w-full h-48 bg-gray-200">
-                  <Image
-                    src="/placeholder-education.jpg"
-                    alt="Education Excellence"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-blue-100 relative group">
+                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-400 transition-all duration-300 pointer-events-none z-10" />
+                <div className="relative w-full h-56 bg-gray-200 overflow-hidden">
+                  <Image src="/images/celebrating-excellence.jpg" alt="Celebrating Excellence" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" fill />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Celebrating Excellence</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Celebrating Excellence</h3>
                   <p className="text-gray-600 mb-6">Recognizing outstanding achievements in education and innovation</p>
                   
                   <div className="flex items-center">
@@ -425,14 +375,14 @@ export default function Home() {
 
 
       {/* Parent's Voice Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Parent&apos;s Voice</h2>
+            <h2 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Parent&apos;s Voice</h2>
             <p className="text-gray-600">Hear what parents have to say about their children&apos;s learning journey with us</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <ParentTestimonialCard
               name="Priya Sharma"
               role="Mother of Arjun, Class 5"
@@ -457,7 +407,7 @@ export default function Home() {
             />
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <StatCard
               value="98%"
               label="Parent Satisfaction"
@@ -493,63 +443,27 @@ export default function Home() {
       </section>
 
       {/* Our Partners Section */}
-      <section className="bg-[#0a192f] py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">Our Partners</h2>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
-            {/* Amazon */}
-            <div className="bg-[#112240] rounded-lg p-6 flex flex-col items-center justify-center h-40 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <span className="text-3xl">🅰️</span>
+      <section className="w-full bg-[#04344a] py-12">
+        <div className="max-w-5xl mx-auto px-4">
+          <h2 className="text-2xl font-bold text-white text-center mb-8">Our Partners</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6">
+            {[
+              { name: 'Amazon', logo: '/images/amazon.jpg' },
+              { name: 'Google', logo: '/images/google.jpg' },
+              { name: 'Microsoft', logo: '/images/microsoft.jpg' },
+              { name: 'Apple', logo: '/images/apple.jpg' },
+              { name: 'WhatsApp', logo: '/images/whatsapp.jpeg' },
+              { name: 'Netflix', logo: '/images/netflix.jpg' },
+            ].map((partner) => (
+              <div key={partner.name} className="bg-[#0e4666] border border-[#2e5c7a] rounded-lg flex flex-col items-center justify-center py-6 px-2">
+                <div className="w-20 h-12 flex items-center justify-center bg-white rounded-md mb-2">
+                  <Image src={partner.logo} alt={partner.name + ' logo'} width={80} height={48} className="object-contain w-20 h-12" />
+                </div>
+                <p className="text-white text-base font-medium text-center mt-1">{partner.name}</p>
               </div>
-              <p className="text-white text-lg font-medium">Amazon</p>
-            </div>
-
-            {/* Google */}
-            <div className="bg-[#112240] rounded-lg p-6 flex flex-col items-center justify-center h-40 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <span className="text-3xl">G</span>
-              </div>
-              <p className="text-white text-lg font-medium">Google</p>
-            </div>
-
-            {/* Microsoft */}
-            <div className="bg-[#112240] rounded-lg p-6 flex flex-col items-center justify-center h-40 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <span className="text-3xl">M</span>
-              </div>
-              <p className="text-white text-lg font-medium">Microsoft</p>
-            </div>
-
-            {/* Apple */}
-            <div className="bg-[#112240] rounded-lg p-6 flex flex-col items-center justify-center h-40 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <span className="text-3xl">🍎</span>
-              </div>
-              <p className="text-white text-lg font-medium">Apple</p>
-            </div>
-
-            {/* WhatsApp */}
-            <div className="bg-[#112240] rounded-lg p-6 flex flex-col items-center justify-center h-40 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <span className="text-3xl">💬</span>
-              </div>
-              <p className="text-white text-lg font-medium">WhatsApp</p>
-            </div>
-
-            {/* Netflix */}
-            <div className="bg-[#112240] rounded-lg p-6 flex flex-col items-center justify-center h-40 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <span className="text-3xl">N</span>
-              </div>
-              <p className="text-white text-lg font-medium">Netflix</p>
-            </div>
+            ))}
           </div>
-
-          <p className="text-center text-gray-400 text-sm mt-8">
-            Backed by IIT Alumni • Made in India 🇮🇳
-          </p>
+          <p className="text-white text-center text-base mt-2">Backed by IIT Alumni • Made in India <span className='align-middle'>🇮🇳</span></p>
         </div>
       </section>
 
@@ -557,93 +471,44 @@ export default function Home() {
       <CurriculumSection />
 
       {/* Available in 18+ Languages Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <section className="w-full bg-[#e9ecef] py-10">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center space-x-2 mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#04344a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <h2 className="text-3xl font-bold text-gray-900">Available in 18+ Languages</h2>
+              <h2 className="text-xl font-bold text-[#04344a]">Available in 18+ Languages</h2>
             </div>
-            
-            <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto mb-8">
-              {/* Row 1 */}
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">GB</span>
-                <span className="text-gray-800">English</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">IN</span>
-                <span className="text-gray-800">हिंदी</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">IN</span>
-                <span className="text-gray-800">தமிழ்</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">IN</span>
-                <span className="text-gray-800">తెలుగు</span>
-              </button>
-              
-              {/* Row 2 */}
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">PK</span>
-                <span className="text-gray-800">اردو</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">FR</span>
-                <span className="text-gray-800">Français</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">DE</span>
-                <span className="text-gray-800">Deutsch</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">ES</span>
-                <span className="text-gray-800">Español</span>
-              </button>
-              
-              {/* Row 3 */}
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">SA</span>
-                <span className="text-gray-800">العربية</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">PT</span>
-                <span className="text-gray-800">Português</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">IT</span>
-                <span className="text-gray-800">Italiano</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">JP</span>
-                <span className="text-gray-800">日本語</span>
-              </button>
-              
-              {/* Row 4 */}
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">KR</span>
-                <span className="text-gray-800">한국어</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">RU</span>
-                <span className="text-gray-800">Русский</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">CN</span>
-                <span className="text-gray-800">中文</span>
-              </button>
-              <button className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span className="text-sm font-medium text-gray-500">+8</span>
-                <span className="text-gray-800">More</span>
-              </button>
+            <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto mb-4">
+              {[
+                { code: 'GB', name: 'English' },
+                { code: 'IN', name: 'हिंदी' },
+                { code: 'IN', name: 'தமிழ்' },
+                { code: 'IN', name: 'తెలుగు' },
+                { code: 'IN', name: 'మరాఠీ' },
+                { code: 'IN', name: 'ગુજરાતી' },
+                { code: 'IN', name: 'বাংলা' },
+                { code: 'IN', name: 'ಕನ್ನಡ' },
+                { code: 'IN', name: 'മലയാളം' },
+                { code: 'IN', name: 'ਪੰਜਾਬੀ' },
+                { code: 'PK', name: 'اردو' },
+                { code: 'IN', name: 'অসমীয়া' },
+                { code: 'IN', name: 'ଓଡ଼ିଆ' },
+                { code: 'IN', name: 'संस्कृत' },
+                { code: 'FR', name: 'Français' },
+                { code: 'DE', name: 'Deutsch' },
+                { code: 'ES', name: 'Español' },
+                { code: 'SA', name: 'العربية' },
+                { code: '+8', name: 'More' },
+              ].map((lang, i) => (
+                <span key={i} className="inline-flex items-center px-4 py-2 rounded-full font-semibold text-white text-sm" style={{background: 'linear-gradient(90deg, #6a98af 0%, #b0c4d4 100%)', border: '1px solid #b0c4d4'}}>
+                  <span className="mr-2 font-bold">{lang.code}</span>
+                  <span>{lang.name}</span>
+                </span>
+              ))}
             </div>
-            
-            <p className="text-gray-600 text-center max-w-2xl mx-auto">
-              Breaking language barriers to make quality education accessible to everyone
-            </p>
+            <p className="text-[#04344a] text-center text-base max-w-2xl mx-auto">Breaking language barriers to make quality education accessible to everyone</p>
           </div>
         </div>
       </section>

@@ -1,4 +1,6 @@
-import { CheckCircle, Lightbulb, Target, Award, Rocket, Users, Globe, TrendingUp } from 'lucide-react';
+"use client";
+import React, { useState, useEffect } from 'react';
+import { CheckCircle, Lightbulb, Target, Award, Rocket, Users, Globe, TrendingUp, Heart } from 'lucide-react';
 
 export default function About() {
   return (
@@ -46,28 +48,32 @@ export default function About() {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-[#145374] p-8 rounded-lg">
-              <div className="w-16 h-16 bg-[#5588a3] rounded-lg mx-auto mb-6 flex items-center justify-center">
+            {/* Card 1 */}
+            <div className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/[0.08] transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl hover:shadow-blue-900/20 overflow-hidden relative">
+              <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+              <div className="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center text-3xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mx-auto">
                 <Target className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Innovation at its Core</h3>
-              <p className="text-gray-300">Constantly pushing boundaries to bring you the future, today.</p>
+              <h3 className="text-xl font-bold mb-4 text-white group-hover:text-white/90">Innovation at its Core</h3>
+              <p className="text-blue-100 mb-6 leading-relaxed">Constantly pushing boundaries to bring you the future, today.</p>
             </div>
-            
-            <div className="bg-[#145374] p-8 rounded-lg">
-              <div className="w-16 h-16 bg-[#5588a3] rounded-lg mx-auto mb-6 flex items-center justify-center">
+            {/* Card 2 */}
+            <div className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/[0.08] transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl hover:shadow-blue-900/20 overflow-hidden relative">
+              <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+              <div className="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center text-3xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mx-auto">
                 <Globe className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Global Impact</h3>
-              <p className="text-gray-300">Creating solutions that transcend borders and transform education worldwide.</p>
+              <h3 className="text-xl font-bold mb-4 text-white group-hover:text-white/90">Global Impact</h3>
+              <p className="text-blue-100 mb-6 leading-relaxed">Creating solutions that transcend borders and transform education worldwide.</p>
             </div>
-            
-            <div className="bg-[#145374] p-8 rounded-lg">
-              <div className="w-16 h-16 bg-[#5588a3] rounded-lg mx-auto mb-6 flex items-center justify-center">
+            {/* Card 3 */}
+            <div className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/[0.08] transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-2xl hover:shadow-blue-900/20 overflow-hidden relative">
+              <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+              <div className="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center text-3xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg mx-auto">
                 <Lightbulb className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4">Innovation</h3>
-              <p className="text-gray-300">Constantly pushing boundaries with creative solutions.</p>
+              <h3 className="text-xl font-bold mb-4 text-white group-hover:text-white/90">Innovation</h3>
+              <p className="text-blue-100 mb-6 leading-relaxed">Constantly pushing boundaries with creative solutions.</p>
             </div>
           </div>
         </div>
@@ -165,24 +171,72 @@ export default function About() {
             <p className="text-xl text-gray-600">Our core values that guide everything we do</p>
           </div>
           
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-[#00334e] to-[#145374] rounded-2xl p-12 text-center text-white">
-              <Lightbulb className="h-16 w-16 text-[#5588a3] mx-auto mb-6" />
-              <h3 className="text-2xl font-bold mb-4">Innovation</h3>
-              <p className="text-lg text-gray-200 leading-relaxed">
-                Constantly pushing boundaries with creative solutions
-              </p>
-              
-              <div className="flex justify-center mt-8 space-x-2">
-                <div className="w-3 h-3 bg-[#5588a3] rounded-full"></div>
-                <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-              </div>
-            </div>
-          </div>
+          {/* Carousel Implementation */}
+          <WhatDrivesUsCarousel />
         </div>
       </section>
     </main>
+  );
+}
+
+const drives = [
+  {
+    icon: <Lightbulb className="h-16 w-16 text-[#5588a3] mx-auto mb-6" />,
+    title: 'Innovation',
+    description: 'Constantly pushing boundaries with creative solutions',
+  },
+  {
+    icon: <Award className="h-16 w-16 text-[#5588a3] mx-auto mb-6" />,
+    title: 'Excellence',
+    description: 'Delivering the highest quality in everything we do',
+  },
+  {
+    icon: <Target className="h-16 w-16 text-[#5588a3] mx-auto mb-6" />,
+    title: 'Integrity',
+    description: 'Building trust through transparency and honesty',
+  },
+  {
+    icon: <Heart className="h-16 w-16 text-[#5588a3] mx-auto mb-6" />,
+    title: 'Passion',
+    description: 'Loving what we do and making an impact',
+  },
+];
+
+function WhatDrivesUsCarousel() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % drives.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="max-w-4xl mx-auto">
+      <div className="bg-gradient-to-br from-[#00334e] to-[#145374] rounded-2xl p-12 text-center text-white transition-all duration-700 ease-in-out relative overflow-hidden">
+        <div className="flex items-center justify-center" style={{ minHeight: 200 }}>
+          {drives.map((drive, idx) => (
+            <div
+              key={drive.title}
+              className={`absolute left-0 right-0 top-0 transition-opacity duration-700 ease-in-out ${idx === current ? 'opacity-100 relative' : 'opacity-0 pointer-events-none'}`}
+              aria-hidden={idx !== current}
+            >
+              {drive.icon}
+              <h3 className="text-2xl font-bold mb-4">{drive.title}</h3>
+              <p className="text-lg text-gray-200 leading-relaxed">{drive.description}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center mt-8 space-x-2">
+          {drives.map((_, idx) => (
+            <div
+              key={idx}
+              className={`w-3 h-3 rounded-full transition-colors duration-300 ${idx === current ? 'bg-[#5588a3]' : 'bg-gray-400'}`}
+            ></div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
