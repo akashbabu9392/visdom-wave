@@ -1,0 +1,146 @@
+/* eslint-disable */
+/* This tells the editor to treat this as a PostCSS file */
+/* stylelint-disable */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Card styles */
+  .auth-card {
+    @apply bg-neutral-100 rounded-2xl shadow-lg p-8 w-full max-w-md mx-auto transform transition-all duration-300;
+    background-color: #e8e8e8;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Header styles */
+  .auth-header {
+    @apply text-center mb-8;
+  }
+  
+  .auth-title {
+    @apply text-2xl font-bold text-[#00334e] mb-2;
+  }
+  
+  .auth-subtitle {
+    @apply text-gray-600 text-sm;
+  }
+
+  /* Form styles */
+  .form-group {
+    @apply mb-6;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-[#145374] mb-2;
+  }
+  
+  .form-input {
+    @apply w-full px-4 py-3 pl-12 rounded-xl border border-gray-300 bg-white/80 focus:outline-none focus:ring-2 focus:ring-[#5588a3] focus:border-transparent transition-all duration-200;
+  }
+  
+  .input-icon {
+    @apply absolute left-4 top-1/2 transform -translate-y-1/2 text-[#5588a3];
+  }
+  
+  /* Button styles */
+  .btn-primary {
+    @apply w-full py-3.5 px-6 rounded-xl font-semibold text-white transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#145374];
+    background: linear-gradient(135deg, #145374 0%, #00334e 100%);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-primary:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-google {
+    @apply w-full flex items-center justify-center gap-3 py-2.5 px-6 rounded-xl border border-gray-300 bg-white text-gray-700 font-medium hover:bg-gray-50 transition-all duration-200;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Tab styles */
+  .tab-container {
+    @apply bg-[#f0f4f8] rounded-2xl p-1.5 mb-8 grid grid-cols-3 gap-1.5;
+  }
+  
+  .tab-button {
+    @apply flex flex-col items-center justify-center py-2.5 px-1 rounded-xl text-sm font-medium transition-all;
+  }
+  
+  .tab-button.active {
+    @apply bg-white text-[#145374] shadow-md;
+  }
+  
+  .tab-button:not(.active) {
+    @apply text-[#00334e] hover:bg-[#e8e8e8];
+  }
+  
+  /* Divider */
+  .divider {
+    @apply relative my-6;
+  }
+  
+  .divider::before {
+    @apply absolute top-1/2 left-0 right-0 h-px bg-gray-200 -translate-y-1/2;
+    content: '';
+  }
+  
+  .divider-text {
+    @apply relative inline-block px-3 bg-[#e8e8e8] text-sm text-[#00334e] font-medium;
+  }
+  
+  /* Animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fadeInUp {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+  
+  /* Stepper */
+  .stepper {
+    @apply flex items-center justify-between mb-8;
+  }
+  
+  .step {
+    @apply relative flex flex-col items-center;
+  }
+  
+  .step-number {
+    @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium mb-1 z-10;
+    border: 2px solid #e8e8e8;
+  }
+  
+  .step.active .step-number {
+    @apply bg-[#145374] text-white border-[#145374];
+  }
+  
+  .step.completed .step-number {
+    @apply bg-gradient-to-br from-[#00334e] to-[#145374] text-white border-transparent;
+  }
+  
+  .step-line {
+    @apply absolute top-4 left-1/2 w-full h-0.5 bg-gray-200 -z-1;
+  }
+  
+  .step:last-child .step-line {
+    @apply hidden;
+  }
+  
+  .step-label {
+    @apply text-xs text-gray-500 mt-1;
+  }
+  
+  .step.active .step-label {
+    @apply text-[#145374] font-medium;
+  }
+}

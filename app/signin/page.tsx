@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
-import { Eye, EyeOff, Smartphone, Camera, Mic } from 'lucide-react';
+import { Eye, EyeOff, Smartphone, Camera, Mic, Lock, ChevronRight } from 'lucide-react';
+import './animations.css';
 
 const mobileSchema = z.object({
   mobile: z.string().min(10, 'Please enter a valid mobile number'),
@@ -18,6 +19,7 @@ export default function SignIn() {
   const [activeTab, setActiveTab] = useState<'mobile' | 'face' | 'voice'>('mobile');
   const [showPin, setShowPin] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
 
   const {
     register,
@@ -35,9 +37,9 @@ export default function SignIn() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-sky-500 p-6 text-center">
+    <main className="min-h-screen bg-[#e8e8e8] flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white/30 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-gradient-to-r from-[#00334e] to-[#145374] p-6 text-center">
           <h1 className="text-2xl font-bold text-white">Welcome Back to Visdom Wave</h1>
           <p className="text-blue-100 mt-2">Sign in to continue your learning journey</p>
         </div>
@@ -55,8 +57,8 @@ export default function SignIn() {
               onClick={() => setActiveTab(tab.id as any)}
               className={`flex flex-col items-center justify-center py-3 px-2 rounded-lg text-sm font-medium transition-all ${
                 activeTab === tab.id
-                  ? 'bg-white text-sky-600 shadow-sm'
-                  : 'text-gray-500 hover:text-sky-600 hover:bg-sky-50'
+                  ? 'bg-white/60 text-[#145374] shadow-md'
+                  : 'text-[#00334e] hover:bg-[#e8e8e8]'
               }`}
             >
               <span className="mb-1">{tab.icon}</span>
@@ -70,13 +72,16 @@ export default function SignIn() {
           <div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Mobile Number</label>
-                <input
-                  {...register('mobile')}
-                  type="tel"
-                  placeholder="Enter your mobile number"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all duration-200"
-                />
+                <label className="text-sm font-medium text-[#145374]">Mobile Number</label>
+                <div className="relative">
+                  <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#5588a3]" />
+                  <input
+                    {...register('mobile')}
+                    type="tel"
+                    placeholder="Enter your mobile number"
+                    className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg bg-white/60 focus:outline-none focus:ring-2 focus:ring-[#5588a3] focus:border-transparent transition-all duration-200 backdrop-blur-sm"
+                  />
+                </div>
                 {errors.mobile && (
                   <p className="text-red-500 text-xs mt-1">{errors.mobile.message}</p>
                 )}
@@ -84,18 +89,19 @@ export default function SignIn() {
 
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">PIN</label>
+                  <label className="text-sm font-medium text-[#145374]">PIN</label>
                   <button type="button" className="text-xs text-sky-600 hover:text-sky-700">
                     Forgot PIN?
                   </button>
                 </div>
                 <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#5588a3]" />
                   <input
                     {...register('pin')}
                     type={showPin ? 'text' : 'password'}
                     placeholder="Enter your 4-digit PIN"
                     maxLength={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent pr-12 transition-all duration-200"
+                    className="w-full pl-11 pr-12 py-3 border border-gray-300 rounded-lg bg-white/60 focus:outline-none focus:ring-2 focus:ring-[#5588a3] focus:border-transparent transition-all duration-200 backdrop-blur-sm"
                   />
                   <button
                     type="button"
@@ -114,7 +120,7 @@ export default function SignIn() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white py-3.5 rounded-lg font-semibold transition-all duration-200 transform hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
+                className="w-full bg-gradient-to-r from-[#145374] to-[#5588a3] hover:from-[#00334e] hover:to-[#145374] text-white py-3.5 rounded-lg font-semibold transition-all duration-200 transform hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#145374] focus:ring-opacity-50 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
@@ -134,7 +140,7 @@ export default function SignIn() {
                 <div className="w-full border-t border-gray-200"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <span className="text-[#00334e] font-medium">Or continue with</span>
               </div>
             </div>
 
@@ -157,64 +163,182 @@ export default function SignIn() {
         {/* Face ID Tab */}
         {activeTab === 'face' && (
           <div className="text-center">
-            <div className="w-48 h-48 border-4 border-[#5588a3] rounded-full mx-auto mb-6 relative overflow-hidden">
-              <div className="absolute inset-4 border-2 border-gray-300 rounded-full"></div>
-              <div className="absolute inset-8 bg-[#e8e8e8] rounded-full flex items-center justify-center">
-                <Camera className="h-12 w-12 text-[#5588a3]" />
+            <div className="relative w-56 h-56 mx-auto mb-8">
+              {/* Outer ring with progress */}
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="48"
+                  fill="none"
+                  stroke="#e8e8e8"
+                  strokeWidth="4"
+                />
+                <circle
+                  className="animate-dash"
+                  cx="50"
+                  cy="50"
+                  r="48"
+                  fill="none"
+                  stroke="url(#gradient)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeDasharray="302"
+                  strokeDashoffset="75.5"
+                />
+                <defs>
+                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#00334e" />
+                    <stop offset="100%" stopColor="#5588a3" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              
+              {/* Camera viewfinder */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#00334e] to-[#145374] opacity-90"></div>
+                  <div className="absolute inset-4 border-2 border-white/30 rounded-full flex items-center justify-center">
+                    <Camera className="h-12 w-12 text-white" />
+                  </div>
+                </div>
               </div>
-              <div className="absolute top-0 left-1/2 w-1 h-8 bg-[#5588a3] animate-pulse"></div>
+              
+              {/* Pulsing indicator */}
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
+                <div className="h-2 w-2 bg-red-500 rounded-full animate-ping"></div>
+              </div>
             </div>
             
             <div className="mb-6">
               <div className="flex justify-center space-x-2 mb-4">
-                <div className="w-2 h-2 bg-[#5588a3] rounded-full"></div>
-                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                {[1, 2, 3].map((step) => (
+                  <div 
+                    key={step}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      step === 1 ? 'w-6 bg-[#00334e]' : 'bg-gray-200'
+                    }`}
+                  ></div>
+                ))}
               </div>
-              <p className="text-gray-600">Position your face in the circle</p>
+              <p className="text-gray-600 font-medium">Position your face in the circle</p>
+              <p className="text-sm text-gray-500 mt-1">Make sure your face is well-lit</p>
             </div>
 
-            <button className="w-full bg-[#00334e] hover:bg-[#145374] text-white py-3 rounded-lg font-semibold transition-colors mb-4">
-              Start Scan
+            <button className="w-full bg-gradient-to-r from-[#00334e] to-[#145374] hover:from-[#00263d] hover:to-[#0e3a56] text-white py-3.5 rounded-xl font-semibold transition-all duration-300 transform hover:shadow-lg hover:scale-[1.02] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#145374] focus:ring-opacity-50">
+              Start Face Recognition
             </button>
           </div>
         )}
 
-        {/* Voice ID Tab */}
+        {/* Voice ID Tab - Modern Design */}
         {activeTab === 'voice' && (
-          <div className="text-center">
-            <div className="w-48 h-32 bg-[#e8e8e8] rounded-lg mx-auto mb-6 flex items-center justify-center">
-              <div className="flex items-end space-x-1">
-                {[...Array(8)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-3 bg-[#5588a3] rounded-full animate-pulse"
-                    style={{
-                      height: `${Math.random() * 40 + 20}px`,
-                      animationDelay: `${i * 0.1}s`
-                    }}
-                  ></div>
-                ))}
+            <div className="text-center">
+              {/* Voice ID Card */}
+              <div className="relative w-72 h-72 bg-gradient-to-br from-white to-[#f8fafc] rounded-2xl mx-auto mb-8 p-6 shadow-lg border border-white/50 overflow-hidden group">
+                {/* Animated background gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#00334e10] to-[#5588a310] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <div className="relative h-full flex flex-col items-center justify-center">
+                  {/* Voice visualization */}
+                  <div className="relative w-40 h-40 mb-6 flex items-end justify-center space-x-1">
+                    {[...Array(15)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-1.5 rounded-full bg-gradient-to-t from-[#00334e] to-[#5588a3] voice-wave-bar"
+                        style={{
+                          height: `${8 + Math.random() * 12}px`,
+                          animationDelay: `${i * 0.05}s`,
+                        }}
+                      />
+                    ))}
+                    
+                    {/* Center mic icon with pulse effect */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className={`relative w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        isRecording 
+                          ? 'bg-gradient-to-br from-[#145374] to-[#00334e] scale-110' 
+                          : 'bg-gradient-to-br from-[#00334e] to-[#5588a3] group-hover:scale-105'
+                      }`}>
+                        <Mic className={`h-8 w-8 text-white transition-transform ${isRecording ? 'scale-110' : ''}`} />
+                        {isRecording && <div className="recording-ring"></div>}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Status indicator */}
+                  <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+                    <div className="flex items-center space-x-2 px-4 py-1.5 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
+                      <div className={`h-2.5 w-2.5 rounded-full ${isRecording ? 'bg-green-500 animate-pulse' : 'bg-blue-500'}`}></div>
+                      <span className="text-xs font-medium text-[#145374]">
+                        {isRecording ? 'Listening...' : 'Ready to listen'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute -top-10 -right-10 w-20 h-20 bg-blue-100 rounded-full opacity-20"></div>
+                <div className="absolute -bottom-5 -left-5 w-16 h-16 bg-blue-200 rounded-full opacity-20"></div>
+              </div>
+              
+              <div className="mb-8 px-4">
+                <h3 className="text-2xl font-bold text-[#00334e] mb-3">Voice Authentication</h3>
+                <p className="text-sm text-gray-600 mb-5">Say this phrase to verify your identity</p>
+                <div className="bg-white/90 backdrop-blur-sm border border-gray-100 rounded-xl p-5 shadow-sm mb-5 transform transition-all duration-300 hover:shadow-md">
+                  <p className="text-xl font-bold bg-gradient-to-r from-[#00334e] to-[#145374] bg-clip-text text-transparent mb-2">
+                    &ldquo;Hello, my voice is my password&rdquo;
+                  </p>
+                  <p className="text-xs text-gray-500 flex items-center justify-center space-x-2">
+                    <span className="inline-flex w-2 h-2 rounded-full bg-green-500"></span>
+                    <span>Speak clearly into your microphone</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-4 px-2">
+                <button 
+                  className={`w-full group relative overflow-hidden py-4 rounded-xl font-semibold transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#145374] focus:ring-opacity-50 ${
+                    isRecording 
+                      ? 'bg-gradient-to-r from-red-500 to-red-600 text-white scale-[1.02] shadow-lg' 
+                      : 'bg-gradient-to-r from-[#145374] to-[#5588a3] text-white hover:from-[#00334e] hover:to-[#145374] hover:shadow-xl hover:scale-[1.02] active:scale-95'
+                  }`}
+                  onMouseDown={() => setIsRecording(true)}
+                  onMouseUp={() => setIsRecording(false)}
+                  onMouseLeave={() => setIsRecording(false)}
+                  onTouchStart={() => setIsRecording(true)}
+                  onTouchEnd={() => setIsRecording(false)}
+                >
+                  <div className="relative z-10 flex items-center justify-center space-x-2">
+                    {isRecording ? (
+                      <>
+                        <div className="w-4 h-4 bg-white rounded-full animate-pulse"></div>
+                        <span>Listening...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Mic className="h-5 w-5 text-white/90" />
+                        <span>Hold to Speak</span>
+                      </>
+                    )}
+                  </div>
+                  <span className="absolute inset-0 bg-gradient-to-r from-[#00334e] to-[#145374] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                </button>
+                
+                <button 
+                  className="w-full bg-white text-[#145374] hover:bg-gray-50 border border-gray-200 py-3.5 rounded-xl font-medium transition-all duration-300 transform hover:shadow-lg hover:scale-[1.01] active:scale-95 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
+                  onClick={() => setActiveTab('mobile')}
+                >
+                  Try Another Method
+                </button>
               </div>
             </div>
-
-            <p className="text-gray-600 mb-6">Say "Hello Visdom Wave" to authenticate</p>
-
-            <button className="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg font-semibold transition-colors mb-2 flex items-center justify-center space-x-2">
-              <Mic className="h-5 w-5" />
-              <span>Start Recording</span>
-            </button>
-
-            <button className="w-full bg-[#00334e] hover:bg-[#145374] text-white py-3 rounded-lg font-semibold transition-colors">
-              Login
-            </button>
-          </div>
         )}
 
         {/* Sign Up Link */}
         <div className="mt-8 text-center">
           <p className="text-gray-600 text-sm">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link 
               href="/signup" 
               className="text-sky-600 hover:text-sky-700 font-medium transition-colors"

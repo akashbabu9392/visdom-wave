@@ -113,7 +113,7 @@ export default function SignUp() {
             key={index}
             className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
               index + 1 <= currentStep
-                ? 'bg-gradient-to-br from-blue-600 to-sky-500 text-white shadow-md'
+                ? 'bg-gradient-to-br from-[#00334e] to-[#145374] text-white shadow-md'
                 : 'bg-gray-100 text-gray-400 border border-gray-200'
             }`}
           >
@@ -124,7 +124,7 @@ export default function SignUp() {
       <div className="relative">
         <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-100 -translate-y-1/2"></div>
         <div 
-          className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-blue-500 to-sky-400 -translate-y-1/2 transition-all duration-500"
+          className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-[#00334e] to-[#145374] -translate-y-1/2 transition-all duration-500"
           style={{ width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%` }}
         ></div>
       </div>
@@ -132,10 +132,10 @@ export default function SignUp() {
   );
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-50 py-12 px-4">
+    <main className="min-h-screen bg-[#e8e8e8] py-12 px-4">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-600 to-sky-500 p-6 text-center">
+        <div className="bg-white/30 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-gradient-to-r from-[#00334e] to-[#145374] p-6 text-center">
             <h1 className="text-2xl font-bold text-white">Create Your Visdom Wave Account</h1>
             <p className="text-blue-100 mt-2">Join us to start your learning journey</p>
           </div>
@@ -147,7 +147,7 @@ export default function SignUp() {
           {currentStep === 1 && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-gray-800 text-center">Get Started</h2>
-              <p className="text-gray-600 text-center text-sm">We'll send you a verification code to your mobile number</p>
+              <p className="text-gray-600 text-center text-sm">We&apos;ll send you a verification code to your mobile number</p>
               
               <form onSubmit={step1Form.handleSubmit(onStep1Submit)} className="space-y-6">
                 <div className="space-y-1">
@@ -160,7 +160,7 @@ export default function SignUp() {
                       {...step1Form.register('mobile')}
                       type="tel"
                       placeholder="Enter your mobile number"
-                      className="w-full pl-12 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all duration-200"
+                      className="w-full pl-12 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#145374] focus:border-transparent transition-all duration-200"
                     />
                   </div>
                   {step1Form.formState.errors.mobile && (
@@ -170,7 +170,7 @@ export default function SignUp() {
                 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white py-3.5 rounded-lg font-semibold transition-all duration-200 transform hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50 flex items-center justify-center space-x-2"
+                  className="w-full bg-gradient-to-r from-[#145374] to-[#5588a3] hover:from-[#00334e] hover:to-[#145374] text-white py-3.5 rounded-lg font-semibold transition-all duration-200 transform hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#145374] focus:ring-opacity-50 flex items-center justify-center space-x-2"
                 >
                   <span>Continue</span>
                   <ChevronRight className="h-5 w-5" />
@@ -188,7 +188,7 @@ export default function SignUp() {
               
               <button
                 type="button"
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-all duration-200"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#145374] transition-all duration-200"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -205,7 +205,7 @@ export default function SignUp() {
           {currentStep === 2 && (
             <div className="space-y-6">
               <div className="text-center">
-                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-[#e8e8e8] rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
@@ -223,7 +223,7 @@ export default function SignUp() {
                       type={showPin ? 'text' : 'password'}
                       placeholder="Enter 4-digit PIN"
                       maxLength={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent pr-12 transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#145374] focus:border-transparent pr-12 transition-all duration-200"
                     />
                     <button
                       type="button"
@@ -247,7 +247,7 @@ export default function SignUp() {
                       type={showConfirmPin ? 'text' : 'password'}
                       placeholder="Re-enter 4-digit PIN"
                       maxLength={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent pr-12 transition-all duration-200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#145374] focus:border-transparent pr-12 transition-all duration-200"
                     />
                     <button
                       type="button"
@@ -273,7 +273,7 @@ export default function SignUp() {
                   </button>
                   <button
                     type="submit"
-                    className="bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white py-2.5 px-6 rounded-lg font-semibold transition-all duration-200 transform hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50"
+                    className="bg-gradient-to-r from-[#145374] to-[#5588a3] hover:from-[#00334e] hover:to-[#145374] text-white py-2.5 px-6 rounded-lg font-semibold transition-all duration-200 transform hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#145374] focus:ring-opacity-50"
                   >
                     Continue
                   </button>

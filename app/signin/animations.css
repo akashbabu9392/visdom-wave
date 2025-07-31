@@ -1,0 +1,133 @@
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: scaleY(0.3);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scaleY(1.5);
+    opacity: 1;
+  }
+}
+
+@keyframes ring-pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-dash {
+  animation: dash 1.5s ease-in-out forwards;
+}
+
+.voice-wave-bar {
+  transition: height 0.3s ease-out, opacity 0.3s ease-out;
+  animation: wave 1.2s ease-in-out infinite;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.animate-ring {
+  position: absolute;
+  border: 2px solid #145374;
+  border-radius: 50%;
+  animation: ring-pulse 1.5s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Camera scan animation */
+@keyframes scan {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  animation: scan 2s linear infinite;
+}
+
+/* Button hover effects */
+.btn-hover-scale {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-hover-scale:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-hover-scale:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Fade in animation for tabs */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Voice ID specific styles */
+.voice-id-container {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.voice-wave-active {
+  animation: wave 0.8s ease-in-out infinite alternate;
+}
+
+.recording-active {
+  box-shadow: 0 0 0 4px rgba(20, 83, 116, 0.4);
+}
+
+.recording-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  border: 2px solid #145374;
+  animation: ring-pulse 1.5s ease-out infinite;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.recording-active .recording-ring {
+  opacity: 1;
+}
