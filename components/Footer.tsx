@@ -90,13 +90,19 @@ export default function Footer() {
           {/* Contact Us */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-2">
-              <li>
-                <span className="text-gray-300">Corporate Office Mumbai</span>
-              </li>
-              <li>
-                <span className="text-gray-300">Get in Touch Worldwide</span>
-              </li>
+            <address className="not-italic text-gray-300 space-y-2">
+              <p>Corporate Office:</p>
+              <p>3A & 3B, Raheja Mindspace,</p>
+              <p>HUDA Techno Enclave,</p>
+              <p>HITEC City, Telangana</p>
+              <p>500081</p>
+              <p className="mt-4">
+                <a href="mailto:info@vidyasphere.com" className="hover:text-[#5588a3] transition-colors">
+                  info@vidyasphere.com
+                </a>
+              </p>
+            </address>
+            <ul className="mt-4 space-y-2">
               <li>
                 <Link href="#" className="text-gray-300 hover:text-[#5588a3] transition-colors">
                   Write Your Review
@@ -108,11 +114,7 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-            <div className="mt-4 space-y-1">
-              <p className="text-gray-300 text-sm">📍 Mumbai, Maharashtra, India</p>
-              <p className="text-gray-300 text-sm">✉️ hello@visdomwave.com</p>
-              <p className="text-gray-300 text-sm">📞 +91 98765 43210</p>
-            </div>
+
           </div>
         </div>
 
