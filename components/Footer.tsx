@@ -119,9 +119,14 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="border-t border-[#145374] mt-12 pt-8">
           <div className="flex flex-col lg:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-4 lg:mb-0">
-              <Globe className="h-6 w-6" />
-              <span className="text-xl font-bold">Visdom Wave</span>
+            <div className="mb-4 lg:mb-0">
+              <Link href="/">
+                <img 
+                  src="/images/logo.jpg" 
+                  alt="Visdom Wave Logo" 
+                  className="h-12 w-auto object-contain"
+                />
+              </Link>
             </div>
             
             <div className="text-center lg:text-left mb-4 lg:mb-0">

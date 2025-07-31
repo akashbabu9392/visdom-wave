@@ -65,146 +65,170 @@ export default function Patents() {
     cardsPerView?: number;
   }
 
-  const Carousel: React.FC<CarouselProps> = ({ items, cardsPerView: initialCardsPerView = 1 }) => {
-    const [cardsPerView, setCardsPerView] = useState(initialCardsPerView);
+  const Carousel: React.FC<CarouselProps> = ({ items }) => {
+    const [cardsPerView, setCardsPerView] = useState(1);
     const [current, setCurrent] = useState(0);
+    const [transitionMs, setTransitionMs] = useState(500);
+    const [breakpoint, setBreakpoint] = useState<"mobile" | "tablet" | "desktop">("mobile");
     const [isAnimating, setIsAnimating] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
     const itemCount = items.length;
-    const totalSlides = Math.ceil(itemCount / cardsPerView);
-    const transitionDuration = 700; // Consistent duration for all devices
 
-    // Handle window resize with debounce
+    // Update breakpoint and cardsPerView on resize
     useEffect(() => {
-      let timeoutId: NodeJS.Timeout;
-      
-      const handleResize = () => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-          let newCardsPerView = 1;
-          if (window.innerWidth >= 1280) newCardsPerView = 4;
-          else if (window.innerWidth >= 1024) newCardsPerView = 3;
-          else if (window.innerWidth >= 640) newCardsPerView = 2;
-          
-          if (newCardsPerView !== cardsPerView) {
-            setCardsPerView(newCardsPerView);
-            // Reset current to prevent out of bounds after resize
-            setCurrent(prev => Math.min(prev, Math.ceil(itemCount / newCardsPerView) - 1));
-          }
-        }, 100);
+      const updateSettings = () => {
+        if (window.innerWidth >= 1280) {
+          setBreakpoint("desktop");
+          setCardsPerView(4);
+          setTransitionMs(1000);
+        } else if (window.innerWidth >= 1024) {
+          setBreakpoint("desktop");
+          setCardsPerView(3);
+          setTransitionMs(1000);
+        } else if (window.innerWidth >= 600) {
+          setBreakpoint("tablet");
+          setCardsPerView(2);
+          setTransitionMs(500);
+        } else {
+          setBreakpoint("mobile");
+          setCardsPerView(1);
+          setTransitionMs(500);
+        }
       };
-      
-      window.addEventListener('resize', handleResize);
-      handleResize(); // Initial call
-      
-      return () => {
-        clearTimeout(timeoutId);
-        window.removeEventListener('resize', handleResize);
-      };
-    }, [cardsPerView, itemCount]);
+      updateSettings();
+      window.addEventListener("resize", updateSettings);
+      return () => window.removeEventListener("resize", updateSettings);
+    }, []);
 
-    // Smooth scroll to position with consistent timing
-    const smoothScroll = (targetIndex: number) => {
+    // Calculate max index based on cardsPerView and breakpoint
+    const maxIndex =
+      breakpoint === "desktop"
+        ? Math.max(0, Math.ceil(itemCount / cardsPerView) - 1)
+        : Math.max(0, itemCount - cardsPerView);
+
+    // Clamp current index on maxIndex change
+    useEffect(() => {
+      setCurrent((prev) => Math.min(prev, maxIndex));
+    }, [maxIndex]);
+
+    // Prevent user clicking quickly before transition finishes
+    const goToSlide = (direction: "prev" | "next") => {
       if (isAnimating) return;
-      
       setIsAnimating(true);
-      setCurrent(targetIndex);
-      
-      // Reset animation lock after transition
+
+      setCurrent((prev) => {
+        let nextIndex;
+        if (direction === "next") {
+          if (breakpoint === "desktop") {
+            nextIndex = prev === maxIndex ? 0 : prev + 1;
+          } else {
+            nextIndex = prev === maxIndex ? prev : prev + 1; // stop at end, no loop
+          }
+        } else {
+          if (breakpoint === "desktop") {
+            nextIndex = prev === 0 ? maxIndex : prev - 1;
+          } else {
+            nextIndex = prev === 0 ? 0 : prev - 1; // stop at start, no loop
+          }
+        }
+        return nextIndex;
+      });
+
       setTimeout(() => {
         setIsAnimating(false);
-        
-        // Handle seamless looping after animation completes
-        if (targetIndex >= totalSlides) {
-          setTimeout(() => {
-            setCurrent(0);
-          }, 50);
-        } else if (targetIndex < 0) {
-          setTimeout(() => {
-            setCurrent(totalSlides - 1);
-          }, 50);
-        }
-      }, transitionDuration);
+      }, transitionMs + 50); // add slight buffer for animation safety
     };
 
-    // Navigate to next/previous slide with circular loop
-    const goToSlide = (direction: 'prev' | 'next') => {
-      let newIndex = direction === 'next' ? current + 1 : current - 1;
-      
-      // Handle circular navigation with seamless loop
-      if (direction === 'next') {
-        if (current >= totalSlides - 1) {
-          // Create a seamless loop by immediately resetting to start without animation
-          setCurrent(totalSlides);
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              setCurrent(0);
-            });
-          });
-          return;
-        }
-      } else {
-        if (current <= 0) {
-          // Create a seamless loop by immediately moving to the end without animation
-          setCurrent(-1);
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              setCurrent(totalSlides - 1);
-            });
-          });
-          return;
-        }
-      }
-      
-      smoothScroll(newIndex);
-    };
-
-    // Calculate item width based on number of cards per view
     const itemWidth = 100 / cardsPerView;
+
+    const getArrowStyles = () => {
+      if (breakpoint === "desktop") {
+        return { prev: { marginLeft: "0.5rem" }, next: { marginRight: "0.5rem" } };
+      }
+      if (breakpoint === "mobile") {
+        return { prev: { marginLeft: "-0.5rem" }, next: { marginRight: "-0.5rem" } };
+      }
+      return { prev: { marginLeft: "0rem" }, next: { marginRight: "0rem" } };
+    };
+    const arrowStyles = getArrowStyles();
 
     return (
       <div className="relative w-full overflow-hidden">
-        {/* Navigation Arrows - Always visible on all devices */}
+        {/* Navigation Arrows */}
+        {/* Left Arrow */}
         <button
           aria-label="Previous"
-          onClick={() => goToSlide('prev')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 transition-colors duration-200"
-          style={{ marginLeft: '0.5rem' }}
+          onClick={() => goToSlide("prev")}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 transition-all duration-300"
+          style={{
+            ...arrowStyles.prev,
+            width: "2.5rem",
+            height: "2.5rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            opacity: current === 0 && breakpoint !== "desktop" ? 0.5 : 1, // disable arrow at start
+            cursor: current === 0 && breakpoint !== "desktop" ? "not-allowed" : "pointer",
+            pointerEvents: current === 0 && breakpoint !== "desktop" ? "none" : "auto",
+          }}
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-[#00334e]" />
         </button>
-        
+
+        {/* Right Arrow */}
         <button
           aria-label="Next"
-          onClick={() => goToSlide('next')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 transition-colors duration-200"
-          style={{ marginRight: '0.5rem' }}
+          onClick={() => goToSlide("next")}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 transition-all duration-300"
+          style={{
+            ...arrowStyles.next,
+            width: "2.5rem",
+            height: "2.5rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            opacity: current === maxIndex && breakpoint !== "desktop" ? 0.5 : 1, // disable arrow at end
+            cursor: current === maxIndex && breakpoint !== "desktop" ? "not-allowed" : "pointer",
+            pointerEvents: current === maxIndex && breakpoint !== "desktop" ? "none" : "auto",
+          }}
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#00334e]" />
         </button>
 
         {/* Carousel Track */}
-        <div className="overflow-visible w-full">
+        <div className="overflow-hidden w-full">
           <div
-            ref={containerRef}
-            className="flex transition-transform duration-700 ease-in-out will-change-transform"
+            className="flex will-change-transform transition-transform"
             style={{
+              transitionDuration: `${transitionMs}ms`,
+              transitionProperty: "transform",
+              transitionTimingFunction:
+                breakpoint === "desktop" ? "ease-in-out" : "cubic-bezier(0.4, 0, 0.2, 1)",
               transform: `translateX(-${current * itemWidth}%)`,
               width: `${itemCount * itemWidth}%`,
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden',
-              WebkitTransformStyle: 'preserve-3d',
-              transformStyle: 'preserve-3d',
-              WebkitFontSmoothing: 'subpixel-antialiased'
             }}
           >
             {items.map((item, idx) => (
               <div
                 key={idx}
-                className="px-2 sm:px-3 md:px-4 transition-all duration-300 hover:scale-[1.02]"
-                style={{ width: `${itemWidth}%`, minWidth: 0 }}
+                className="transition-all duration-300 hover:scale-[1.02]"
+                style={{
+                  width: `${itemWidth}%`,
+                  minWidth: 0,
+                  paddingLeft:
+                    breakpoint === "desktop"
+                      ? "1rem"
+                      : breakpoint === "tablet"
+                      ? "0.75rem"
+                      : "0.5rem",
+                  paddingRight:
+                    breakpoint === "desktop"
+                      ? "1rem"
+                      : breakpoint === "tablet"
+                      ? "0.75rem"
+                      : "0.5rem",
+                }}
               >
-                <div className="bg-[#00334e] text-white p-4 sm:p-6 md:p-8 rounded-lg hover:bg-[#145374] transition-colors h-full flex flex-col">
+                <div className="bg-[#00334e] text-white p-4 sm:p-6 md:p-8 rounded-lg hover:bg-[#145374] transition-all duration-300 h-full flex flex-col transform hover:scale-[1.02] hover:shadow-lg">
                   <item.icon className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-[#5588a3] mb-4 md:mb-6" />
                   <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-2 sm:mb-3 md:mb-4 leading-tight">
                     {item.title}
