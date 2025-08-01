@@ -1,249 +1,237 @@
 "use client";
 
 import { Brain, Mic, Shield, Zap, Code, Database, Globe, Cpu } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useRef, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { A11y, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 export default function Patents() {
   const patents = [
     {
+      id: "personalized-education",
       icon: Brain,
       title: "World's first 10,000+ Concepts Based Personalized Education",
       description: "A revolutionary approach to personalized learning that adapts to individual student needs."
     },
     {
+      id: "interactive-voice",
       icon: Mic,
       title: "World's first 2-Way Interactive Voice Based Education Platform",
       description: "Engaging voice-enabled learning experience that responds to student interactions."
     },
     {
+      id: "multiple-passwords",
       icon: Shield,
       title: "Single User Multiple Passwords Mechanism",
       description: "Enhanced security protocol for educational platforms with multiple access levels."
     },
     {
+      id: "doubt-clarification",
       icon: Zap,
       title: "AI-Powered Doubt Clarification System",
       description: "Intelligent system that provides instant clarification for student queries."
     },
     {
+      id: "adaptive-learning",
       icon: Code,
       title: "Adaptive Learning Algorithm",
       description: "Machine learning algorithm that continuously adapts to student learning patterns."
     },
     {
+      id: "content-recommendation",
       icon: Database,
       title: "Smart Content Recommendation Engine",
       description: "AI-driven engine that recommends personalized learning content."
     },
     {
+      id: "multi-language",
       icon: Globe,
       title: "Multi-Language Learning Platform",
       description: "Platform supporting seamless learning across multiple languages."
     },
     {
+      id: "performance-analytics",
       icon: Cpu,
       title: "Real-time Performance Analytics",
       description: "Advanced analytics system for tracking and improving student performance."
     },
     {
+      id: "cognitive-load",
       icon: Brain,
       title: "Cognitive Load Optimization",
       description: "Technology that optimizes learning by managing cognitive load effectively."
     }
   ];
 
-  // Enhanced carousel component with smooth scrolling and circular loop
-  interface CarouselItem {
-    icon: React.ComponentType<{ className?: string }>;
-    title: string;
-    description: string;
-  }
+  const PatentCard = ({ item }: { item: typeof patents[0] }) => (
+    <div className="group w-full h-full flex flex-col bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative" style={{ minHeight: '100%' }}>
+      {/* Gradient Border Top */}
+      <div className="h-1.5 bg-gradient-to-r from-[#00334e] via-[#145374] to-[#5588a3] w-full"></div>
+      
+      {/* Card Content */}
+      <div className="p-4 sm:p-5 md:p-6 lg:p-7 flex flex-col h-full">
+        <div className="flex items-start mb-3 sm:mb-4 md:mb-5">
+          <div className="bg-gradient-to-br from-[#00334e] to-[#145374] p-2 sm:p-2.5 rounded-lg mr-3 sm:mr-4 flex-shrink-0 transform transition-transform duration-300 group-hover:rotate-6">
+            <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+          </div>
+          <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#00334e] line-clamp-2 leading-tight">
+            {item.title}
+          </h3>
+        </div>
+        
+        <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-5 md:mb-6 flex-grow leading-relaxed">
+          {item.description}
+        </p>
+        
+        <div className="pt-3 sm:pt-4 mt-auto border-t border-gray-100">
+          <Link 
+            href={`/patents/${item.id}`}
+            className="inline-flex items-center text-sm sm:text-base text-[#145374] hover:text-[#00334e] font-medium transition-all duration-300 group"
+          >
+            <span className="relative">
+              Learn more
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#5588a3] transition-all duration-300 group-hover:w-full"></span>
+            </span>
+            <svg 
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1.5 sm:ml-2 transition-transform duration-300 group-hover:translate-x-1" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+      
+      {/* Hover Effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#00334e]/0 via-[#145374]/0 to-[#5588a3]/0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none"></div>
+    </div>
+  );
 
-  interface CarouselProps {
-    items: CarouselItem[];
-    cardsPerView?: number;
-  }
-
-  const Carousel: React.FC<CarouselProps> = ({ items }) => {
-    const [cardsPerView, setCardsPerView] = useState(1);
-    const [current, setCurrent] = useState(0);
-    const [transitionMs, setTransitionMs] = useState(500);
-    const [breakpoint, setBreakpoint] = useState<"mobile" | "tablet" | "desktop">("mobile");
-    const [isAnimating, setIsAnimating] = useState(false);
-    const itemCount = items.length;
-
-    // Update breakpoint and cardsPerView on resize
-    useEffect(() => {
-      const updateSettings = () => {
-        if (window.innerWidth >= 1280) {
-          setBreakpoint("desktop");
-          setCardsPerView(4);
-          setTransitionMs(1000);
-        } else if (window.innerWidth >= 1024) {
-          setBreakpoint("desktop");
-          setCardsPerView(3);
-          setTransitionMs(1000);
-        } else if (window.innerWidth >= 600) {
-          setBreakpoint("tablet");
-          setCardsPerView(2);
-          setTransitionMs(500);
-        } else {
-          setBreakpoint("mobile");
-          setCardsPerView(1);
-          setTransitionMs(500);
+  const Carousel: React.FC<{ items: typeof patents }> = ({ items }) => {
+    // Create a ref to track the tallest card height
+    const slideRefs = useRef<Array<HTMLDivElement | null>>([]);
+    
+    // Function to update card heights
+    const updateHeights = useCallback(() => {
+      if (!slideRefs.current) return;
+      
+      // Reset all heights to auto first
+      slideRefs.current.forEach(slide => {
+        if (slide) {
+          slide.style.height = 'auto';
         }
-      };
-      updateSettings();
-      window.addEventListener("resize", updateSettings);
-      return () => window.removeEventListener("resize", updateSettings);
-    }, []);
-
-    // Calculate max index based on cardsPerView and breakpoint
-    const maxIndex =
-      breakpoint === "desktop"
-        ? Math.max(0, Math.ceil(itemCount / cardsPerView) - 1)
-        : Math.max(0, itemCount - cardsPerView);
-
-    // Clamp current index on maxIndex change
-    useEffect(() => {
-      setCurrent((prev) => Math.min(prev, maxIndex));
-    }, [maxIndex]);
-
-    // Prevent user clicking quickly before transition finishes
-    const goToSlide = (direction: "prev" | "next") => {
-      if (isAnimating) return;
-      setIsAnimating(true);
-
-      setCurrent((prev) => {
-        let nextIndex;
-        if (direction === "next") {
-          if (breakpoint === "desktop") {
-            nextIndex = prev === maxIndex ? 0 : prev + 1;
-          } else {
-            nextIndex = prev === maxIndex ? prev : prev + 1; // stop at end, no loop
-          }
-        } else {
-          if (breakpoint === "desktop") {
-            nextIndex = prev === 0 ? maxIndex : prev - 1;
-          } else {
-            nextIndex = prev === 0 ? 0 : prev - 1; // stop at start, no loop
-          }
-        }
-        return nextIndex;
       });
-
-      setTimeout(() => {
-        setIsAnimating(false);
-      }, transitionMs + 50); // add slight buffer for animation safety
-    };
-
-    const itemWidth = 100 / cardsPerView;
-
-    const getArrowStyles = () => {
-      if (breakpoint === "desktop") {
-        return { prev: { marginLeft: "0.5rem" }, next: { marginRight: "0.5rem" } };
-      }
-      if (breakpoint === "mobile") {
-        return { prev: { marginLeft: "-0.5rem" }, next: { marginRight: "-0.5rem" } };
-      }
-      return { prev: { marginLeft: "0rem" }, next: { marginRight: "0rem" } };
-    };
-    const arrowStyles = getArrowStyles();
+      
+      // Group slides by row
+      const rows = new Map<number, HTMLDivElement[]>();
+      
+      slideRefs.current.forEach(slide => {
+        if (!slide) return;
+        
+        const rect = slide.getBoundingClientRect();
+        const row = Math.floor(rect.top);
+        
+        if (!rows.has(row)) {
+          rows.set(row, []);
+        }
+        rows.get(row)?.push(slide);
+      });
+      
+      // Set same height for all slides in each row
+      rows.forEach(rowSlides => {
+        if (rowSlides.length <= 1) return;
+        
+        // Find max height in the row
+        const maxHeight = Math.max(
+          ...rowSlides.map(slide => slide.offsetHeight)
+        );
+        
+        // Apply max height to all slides in the row
+        rowSlides.forEach(slide => {
+          if (slide) {
+            slide.style.height = `${maxHeight}px`;
+          }
+        });
+      });
+    }, []);
+    
+    // Update card heights when window resizes or items change
+    useEffect(() => {
+      // Initial update with a small delay to ensure DOM is ready
+      const timer = setTimeout(updateHeights, 300);
+      
+      // Update on window resize with debounce
+      let resizeTimer: NodeJS.Timeout;
+      const handleResize = () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateHeights, 100);
+      };
+      
+      window.addEventListener('resize', handleResize);
+      
+      // Initial update after a short delay
+      const initTimer = setTimeout(updateHeights, 500);
+      
+      // Cleanup
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(initTimer);
+        clearTimeout(resizeTimer);
+        window.removeEventListener('resize', handleResize);
+      };
+    }, [items, updateHeights]);
 
     return (
-      <div className="relative w-full overflow-hidden">
-        {/* Navigation Arrows */}
-        {/* Left Arrow */}
-        <button
-          aria-label="Previous"
-          onClick={() => goToSlide("prev")}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 transition-all duration-300"
-          style={{
-            ...arrowStyles.prev,
-            width: "2.5rem",
-            height: "2.5rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            opacity: current === 0 && breakpoint !== "desktop" ? 0.5 : 1, // disable arrow at start
-            cursor: current === 0 && breakpoint !== "desktop" ? "not-allowed" : "pointer",
-            pointerEvents: current === 0 && breakpoint !== "desktop" ? "none" : "auto",
+      <div className="relative group w-full">
+        <Swiper
+          modules={[A11y, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1}
+          autoplay={{
+            delay: 1500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+            waitForTransition: true,
           }}
-        >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-[#00334e]" />
-        </button>
-
-        {/* Right Arrow */}
-        <button
-          aria-label="Next"
-          onClick={() => goToSlide("next")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 transition-all duration-300"
-          style={{
-            ...arrowStyles.next,
-            width: "2.5rem",
-            height: "2.5rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            opacity: current === maxIndex && breakpoint !== "desktop" ? 0.5 : 1, // disable arrow at end
-            cursor: current === maxIndex && breakpoint !== "desktop" ? "not-allowed" : "pointer",
-            pointerEvents: current === maxIndex && breakpoint !== "desktop" ? "none" : "auto",
+          breakpoints={{
+            0: { slidesPerView: 1, spaceBetween: 24 },
+            480: { slidesPerView: 1, spaceBetween: 24 },
+            640: { slidesPerView: 2, spaceBetween: 24 },
+            768: { slidesPerView: 2, spaceBetween: 32 },
+            1024: { slidesPerView: 2, spaceBetween: 32 },
+            1280: { slidesPerView: 3, spaceBetween: 32 },
           }}
+          className="px-4 sm:px-6 md:px-8 py-6 w-full"
+          loop={true}
+          speed={800}
+          grabCursor={true}
+          watchSlidesProgress={true}
+          slideToClickedSlide={true}
+          onResize={updateHeights}
         >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#00334e]" />
-        </button>
-
-        {/* Carousel Track */}
-        <div className="overflow-hidden w-full">
-          <div
-            className="flex will-change-transform transition-transform"
-            style={{
-              transitionDuration: `${transitionMs}ms`,
-              transitionProperty: "transform",
-              transitionTimingFunction:
-                breakpoint === "desktop" ? "ease-in-out" : "cubic-bezier(0.4, 0, 0.2, 1)",
-              transform: `translateX(-${current * itemWidth}%)`,
-              width: `${itemCount * itemWidth}%`,
-            }}
-          >
-            {items.map((item, idx) => (
-              <div
-                key={idx}
-                className="transition-all duration-300 hover:scale-[1.02]"
-                style={{
-                  width: `${itemWidth}%`,
-                  minWidth: 0,
-                  paddingLeft:
-                    breakpoint === "desktop"
-                      ? "1rem"
-                      : breakpoint === "tablet"
-                      ? "0.75rem"
-                      : "0.5rem",
-                  paddingRight:
-                    breakpoint === "desktop"
-                      ? "1rem"
-                      : breakpoint === "tablet"
-                      ? "0.75rem"
-                      : "0.5rem",
+          {items.map((item, index) => (
+            <SwiperSlide key={item.id} className="h-auto">
+              <div 
+                ref={el => {
+                  if (el) {
+                    slideRefs.current[index] = el;
+                  }
                 }}
+                className="h-full flex"
               >
-                <div className="bg-[#00334e] text-white p-4 sm:p-6 md:p-8 rounded-lg hover:bg-[#145374] transition-all duration-300 h-full flex flex-col transform hover:scale-[1.02] hover:shadow-lg">
-                  <item.icon className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-[#5588a3] mb-4 md:mb-6" />
-                  <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-2 sm:mb-3 md:mb-4 leading-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-300 mb-4 md:mb-6 leading-relaxed">
-                    {item.description}
-                  </p>
-                  <button className="text-xs sm:text-sm text-[#5588a3] hover:text-white transition-colors font-medium mt-auto self-start">
-                    View More →
-                  </button>
+                <div className="w-full">
+                  <PatentCard item={item} />
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     );
   };
